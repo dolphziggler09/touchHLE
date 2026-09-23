@@ -541,7 +541,7 @@ impl Window {
                 }
                 _ => {}
             }
-
+eprintln!("SDL EVENT: {:?}", event);
             self.event_queue.push_back(match event {
                 E::Quit { .. } => Event::Quit,
                 E::MouseButtonDown {
