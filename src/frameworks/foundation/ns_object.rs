@@ -13,9 +13,9 @@
 //!   explains the algorithm `setValue:forKey:` should follow.
 //!
 //! See also: [crate::objc], especially the `objects` module.
-use crate::abi::GuestFunction;
 use super::ns_string::{from_rust_string, to_rust_string};
 use super::{NSTimeInterval, NSUInteger};
+use crate::abi::GuestFunction;
 use crate::frameworks::foundation::ns_run_loop::{add_perform_request, cancel_perform_requests};
 use crate::frameworks::foundation::ns_thread::detach_new_thread_inner;
 use crate::libc::semaphore::{host_destroy_semaphore, sem_wait};
