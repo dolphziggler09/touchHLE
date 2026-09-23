@@ -203,7 +203,28 @@ impl ObjC {
             }
         }
     }
+    pub fn class_get_guest_method_implementation(
+        &self,
+        class: Class,
+        sel: SEL,
+    ) -> Option<GuestIMP> {
+        let mut class = class;
+        loop {
+            let &ClassHostObject {
+                superclass,
+                ref methods,
+                ..
+            } = self.borrow(class);
 
+            if let Some(IMP::Guest(imp)) = methods.get(&sel) {
+                return Some(*imp);
+            } else if superclass == nil {
+                return None;
+            } else {
+                class = superclass;
+            }
+        }
+    }
     /// Variant of `class_has_method` which doesn't account for inheritance.
     pub fn class_has_uninherited_method(&self, class: Class, sel: SEL) -> bool {
         let ClassHostObject { methods, .. } = self.borrow(class);
